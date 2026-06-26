@@ -24,48 +24,17 @@
         android:visibility="gone" />
 
     <ImageButton
-        android:id="@+id/flashButton"
+        android:id="@+id/settingsButton"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="@string/flash_off"
+        android:contentDescription="@string/settings"
         android:padding="8dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_flash_off"
+        android:src="@android:drawable/ic_menu_preferences"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@android:color/white" />
-
-    <Button
-        android:id="@+id/aspectRatioButton"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:text="@string/aspect_ratio_4_3"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/flashButton"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/aboutButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="32dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="@string/about"
-        android:padding="8dp"
-        android:scaleType="fitCenter"
-        android:src="@android:drawable/ic_menu_info_details"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@android:color/white" />
 

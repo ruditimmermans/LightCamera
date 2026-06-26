@@ -25,6 +25,7 @@ import androidx.camera.video.*
 import androidx.camera.video.VideoCapture
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.preference.PreferenceManager
 import com.light.lightcamera.databinding.ActivityMainBinding
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
@@ -56,12 +57,7 @@ class MainActivity : AppCompatActivity() {
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        val sharedPrefs = getSharedPreferences("settings", Context.MODE_PRIVATE)
-        flashMode = sharedPrefs.getInt(KEY_FLASH_MODE, ImageCapture.FLASH_MODE_OFF)
-        lensFacing = sharedPrefs.getInt(KEY_LENS_FACING, CameraSelector.LENS_FACING_BACK)
-        screenAspectRatio = sharedPrefs.getInt(KEY_ASPECT_RATIO, AspectRatio.RATIO_4_3)
-        updateFlashIcon()
-        updateAspectRatioButton()
+        loadSettings()
 
         // Request camera permissions
         if (allPermissionsGranted()) {
@@ -74,13 +70,11 @@ class MainActivity : AppCompatActivity() {
 
         viewBinding.imageCaptureButton.setOnClickListener { takePhoto() }
         viewBinding.videoCaptureButton.setOnClickListener { captureVideo() }
-        viewBinding.flashButton.setOnClickListener { toggleFlash() }
-        viewBinding.aspectRatioButton.setOnClickListener { toggleAspectRatio() }
         viewBinding.qrButton.setOnClickListener { toggleQrScanner() }
         viewBinding.switchCameraButton.setOnClickListener { switchCamera() }
         viewBinding.galleryButton.setOnClickListener { openGallery() }
-        viewBinding.aboutButton.setOnClickListener {
-            val intent = Intent(this, AboutActivity::class.java)
+        viewBinding.settingsButton.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
         }
 
@@ -102,17 +96,40 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        val oldFlash = flashMode
+        val oldRatio = screenAspectRatio
+        loadSettings()
         applyButtonColor()
+        
+        if (oldFlash != flashMode || oldRatio != screenAspectRatio) {
+            startCamera()
+        }
+    }
+
+    private fun loadSettings() {
+        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
+        
+        val flashValue = sharedPrefs.getString(KEY_FLASH_MODE, "0")?.toInt() ?: 0
+        flashMode = when (flashValue) {
+            1 -> ImageCapture.FLASH_MODE_ON
+            2 -> ImageCapture.FLASH_MODE_AUTO
+            else -> ImageCapture.FLASH_MODE_OFF
+        }
+
+        val ratioValue = sharedPrefs.getString(KEY_ASPECT_RATIO, "0")?.toInt() ?: 0
+        screenAspectRatio = if (ratioValue == 1) AspectRatio.RATIO_16_9 else AspectRatio.RATIO_4_3
+        
+        // lensFacing is still in custom sharedPrefs or default? 
+        // Let's move everything to default.
+        lensFacing = sharedPrefs.getInt(KEY_LENS_FACING, CameraSelector.LENS_FACING_BACK)
     }
 
     private fun applyButtonColor() {
-        val sharedPrefs = getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
         val color = sharedPrefs.getInt(KEY_BUTTON_COLOR, Color.WHITE)
         val colorStateList = ColorStateList.valueOf(color)
 
-        viewBinding.flashButton.imageTintList = colorStateList
-        viewBinding.aspectRatioButton.setTextColor(color)
-        viewBinding.aboutButton.imageTintList = colorStateList
+        viewBinding.settingsButton.imageTintList = colorStateList
         viewBinding.switchCameraButton.imageTintList = colorStateList
         viewBinding.galleryButton.imageTintList = colorStateList
         
@@ -181,63 +198,6 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun toggleFlash() {
-        flashMode = when (flashMode) {
-            ImageCapture.FLASH_MODE_OFF -> ImageCapture.FLASH_MODE_ON
-            ImageCapture.FLASH_MODE_ON -> ImageCapture.FLASH_MODE_AUTO
-            else -> ImageCapture.FLASH_MODE_OFF
-        }
-        updateFlashIcon()
-        imageCapture?.flashMode = flashMode
-
-        val sharedPrefs = getSharedPreferences("settings", Context.MODE_PRIVATE)
-        with(sharedPrefs.edit()) {
-            putInt(KEY_FLASH_MODE, flashMode)
-            apply()
-        }
-    }
-
-    private fun updateFlashIcon() {
-        val iconRes = when (flashMode) {
-            ImageCapture.FLASH_MODE_ON -> R.drawable.ic_flash_on
-            ImageCapture.FLASH_MODE_AUTO -> R.drawable.ic_flash_auto
-            else -> R.drawable.ic_flash_off
-        }
-        val descriptionRes = when (flashMode) {
-            ImageCapture.FLASH_MODE_ON -> R.string.flash_on
-            ImageCapture.FLASH_MODE_AUTO -> R.string.flash_auto
-            else -> R.string.flash_off
-        }
-        viewBinding.flashButton.setImageResource(iconRes)
-        viewBinding.flashButton.contentDescription = getString(descriptionRes)
-    }
-
-    private fun toggleAspectRatio() {
-        screenAspectRatio = if (screenAspectRatio == AspectRatio.RATIO_4_3) {
-            AspectRatio.RATIO_16_9
-        } else {
-            AspectRatio.RATIO_4_3
-        }
-        updateAspectRatioButton()
-        
-        val sharedPrefs = getSharedPreferences("settings", Context.MODE_PRIVATE)
-        with(sharedPrefs.edit()) {
-            putInt(KEY_ASPECT_RATIO, screenAspectRatio)
-            apply()
-        }
-        
-        startCamera()
-    }
-
-    private fun updateAspectRatioButton() {
-        val textRes = if (screenAspectRatio == AspectRatio.RATIO_4_3) {
-            R.string.aspect_ratio_4_3
-        } else {
-            R.string.aspect_ratio_16_9
-        }
-        viewBinding.aspectRatioButton.text = getString(textRes)
-    }
-
     private fun toggleQrScanner() {
         qrScannerEnabled = !qrScannerEnabled
         updateQrIcon()
@@ -247,7 +207,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateQrIcon() {
-        val sharedPrefs = getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
         val baseColor = sharedPrefs.getInt(KEY_BUTTON_COLOR, Color.WHITE)
         val color = if (qrScannerEnabled) Color.YELLOW else baseColor
         viewBinding.qrButton.imageTintList = ColorStateList.valueOf(color)
@@ -260,7 +220,7 @@ class MainActivity : AppCompatActivity() {
             CameraSelector.LENS_FACING_FRONT
         }
 
-        val sharedPrefs = getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
         with(sharedPrefs.edit()) {
             putInt(KEY_LENS_FACING, lensFacing)
             apply()
@@ -396,7 +356,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         viewBinding.videoCaptureButton.apply {
                             setImageResource(R.drawable.ic_videocam)
-                            val sharedPrefs = getSharedPreferences("settings", Context.MODE_PRIVATE)
+                            val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this@MainActivity)
                             val baseColor = sharedPrefs.getInt(KEY_BUTTON_COLOR, Color.WHITE)
                             imageTintList = ColorStateList.valueOf(baseColor)
                             contentDescription = getString(R.string.record_video)

@@ -1,0 +1,117 @@
+package com.light.lightcamera
+
+import android.content.Context
+import android.graphics.Color
+import android.os.Bundle
+import android.widget.EditText
+import android.widget.FrameLayout
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+
+class SettingsActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_settings)
+        if (savedInstanceState == null) {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.settings, SettingsFragment())
+                .commit()
+        }
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = getString(R.string.settings)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
+    }
+
+    class SettingsFragment : PreferenceFragmentCompat() {
+        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+            setPreferencesFromResource(R.xml.root_preferences, rootKey)
+
+            findPreference<Preference>("button_color")?.setOnPreferenceClickListener {
+                showColorPickerDialog()
+                true
+            }
+        }
+
+        private fun showColorPickerDialog() {
+            val context = requireContext()
+            val colorsMap = linkedMapOf(
+                getString(R.string.color_white) to Color.WHITE,
+                getString(R.string.color_red) to Color.RED,
+                getString(R.string.color_green) to Color.GREEN,
+                getString(R.string.color_blue) to Color.BLUE,
+                getString(R.string.color_yellow) to Color.YELLOW,
+                getString(R.string.color_cyan) to Color.CYAN,
+                getString(R.string.color_magenta) to Color.MAGENTA,
+                getString(R.string.color_orange) to Color.parseColor("#FFA500"),
+                getString(R.string.color_purple) to Color.parseColor("#800080"),
+                getString(R.string.custom_color) to Color.TRANSPARENT
+            )
+            val names = colorsMap.keys.toTypedArray()
+
+            MaterialAlertDialogBuilder(context)
+                .setTitle(R.string.select_color)
+                .setItems(names) { _, which ->
+                    val name = names[which]
+                    if (name == getString(R.string.custom_color)) {
+                        showCustomColorDialog()
+                    } else {
+                        val selectedColor = colorsMap[name] ?: Color.WHITE
+                        saveButtonColor(selectedColor)
+                    }
+                }
+                .show()
+        }
+
+        private fun showCustomColorDialog() {
+            val context = requireContext()
+            val input = EditText(context)
+            input.hint = "#RRGGBB"
+
+            val container = FrameLayout(context)
+            val params = FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT
+            )
+            val margin = (16 * resources.displayMetrics.density).toInt()
+            params.leftMargin = margin
+            params.rightMargin = margin
+            input.layoutParams = params
+            container.addView(input)
+
+            MaterialAlertDialogBuilder(context)
+                .setTitle(R.string.enter_hex_color)
+                .setView(container)
+                .setPositiveButton(android.R.string.ok) { _, _ ->
+                    val hex = input.text.toString().trim()
+                    try {
+                        val colorHex = if (hex.startsWith("#")) hex else "#$hex"
+                        val color = Color.parseColor(colorHex)
+                        saveButtonColor(color)
+                    } catch (e: Exception) {
+                        Toast.makeText(context, R.string.invalid_color, Toast.LENGTH_SHORT).show()
+                    }
+                }
+                .setNegativeButton(android.R.string.cancel, null)
+                .show()
+        }
+
+        private fun saveButtonColor(color: Int) {
+            val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+            with(sharedPrefs.edit()) {
+                putInt("button_color", color)
+                apply()
+            }
+            Toast.makeText(requireContext(), getString(R.string.color_updated), Toast.LENGTH_SHORT).show()
+        }
+    }
+}

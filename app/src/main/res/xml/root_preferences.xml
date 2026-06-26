@@ -1,0 +1,45 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="Camera Settings">
+
+        <ListPreference
+            app:defaultValue="0"
+            app:entries="@array/flash_modes"
+            app:entryValues="@array/flash_values"
+            app:key="flash_mode"
+            app:title="@string/flash_mode_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:defaultValue="0"
+            app:entries="@array/aspect_ratios"
+            app:entryValues="@array/aspect_ratio_values"
+            app:key="aspect_ratio"
+            app:title="@string/aspect_ratio_title"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Appearance">
+
+        <Preference
+            app:key="button_color"
+            app:summary="@string/button_color_summary"
+            app:title="@string/button_color_title" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Info">
+        <Preference
+            app:key="about"
+            app:summary="App version and license information"
+            app:title="@string/about">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetClass="com.light.lightcamera.AboutActivity"
+                android:targetPackage="com.light.lightcamera" />
+        </Preference>
+    </PreferenceCategory>
+
+</PreferenceScreen>

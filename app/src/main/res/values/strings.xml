@@ -25,8 +25,48 @@
     <string name="custom_color">Custom...</string>
     <string name="enter_hex_color">Enter Hex Color (e.g., #FF0000)</string>
     <string name="invalid_color">Invalid color format</string>
+    <string name="color_updated">Color updated</string>
+    <string name="color_white">White</string>
+    <string name="color_red">Red</string>
+    <string name="color_green">Green</string>
+    <string name="color_blue">Blue</string>
+    <string name="color_yellow">Yellow</string>
+    <string name="color_cyan">Cyan</string>
+    <string name="color_magenta">Magenta</string>
+    <string name="color_orange">Orange</string>
+    <string name="color_purple">Purple</string>
+
+    <string name="settings">Settings</string>
+    <string name="flash_mode_title">Flash Mode</string>
+    <string name="flash_mode_summary">Set the default flash mode</string>
+    <string name="button_color_title">Button Color</string>
+    <string name="button_color_summary">Choose the color of the UI buttons</string>
+    <string name="aspect_ratio_title">Aspect Ratio</string>
+    <string name="aspect_ratio_summary">Choose the camera aspect ratio</string>
 
     <string name="no_app_to_open_photo">No app to open photo</string>
+
+    <string-array name="flash_modes">
+        <item>Off</item>
+        <item>On</item>
+        <item>Auto</item>
+    </string-array>
+
+    <string-array name="flash_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="aspect_ratios">
+        <item>4:3</item>
+        <item>16:9</item>
+    </string-array>
+
+    <string-array name="aspect_ratio_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
     <string name="no_app_to_open_video">No app to open video</string>
     <string name="no_app_to_open_url">No app found to open URL</string>
     <string name="photo_captured">Photo captured at %1$s</string>
