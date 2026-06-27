@@ -6,10 +6,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.view.GestureDetector
 import android.view.KeyEvent
 import android.view.ScaleGestureDetector
 import android.view.View
 import android.view.MotionEvent
+import android.view.InputDevice
 import android.widget.SeekBar
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -174,6 +176,8 @@ class MainActivity : AppCompatActivity() {
         return when (keyCode) {
             KeyEvent.KEYCODE_DPAD_CENTER,
             KeyEvent.KEYCODE_ENTER,
+            KeyEvent.KEYCODE_NUMPAD_ENTER,
+            KeyEvent.KEYCODE_SPACE,
             KeyEvent.KEYCODE_CAMERA,
             KeyEvent.KEYCODE_VOLUME_UP,
             KeyEvent.KEYCODE_VOLUME_DOWN -> {
@@ -182,6 +186,20 @@ class MainActivity : AppCompatActivity() {
             }
             else -> super.onKeyDown(keyCode, event)
         }
+    }
+
+    override fun onGenericMotionEvent(event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_SCROLL) {
+            val delta = event.getAxisValue(MotionEvent.AXIS_VSCROLL)
+            if (delta != 0f) {
+                val currentZoomRatio = camera?.cameraInfo?.zoomState?.value?.zoomRatio ?: 1f
+                // Scroll up (positive) to zoom in, scroll down (negative) to zoom out
+                val newZoom = if (delta > 0) currentZoomRatio * 1.05f else currentZoomRatio / 1.05f
+                camera?.cameraControl?.setZoomRatio(newZoom)
+                return true
+            }
+        }
+        return super.onGenericMotionEvent(event)
     }
 
     private fun setupZoom() {
@@ -195,10 +213,17 @@ class MainActivity : AppCompatActivity() {
         }
         val scaleGestureDetector = ScaleGestureDetector(this, listener)
 
-        viewBinding.viewFinder.setOnTouchListener { view, event ->
+        val gestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
+            override fun onSingleTapUp(e: MotionEvent): Boolean {
+                viewBinding.viewFinder.performClick()
+                return true
+            }
+        })
+
+        viewBinding.viewFinder.setOnTouchListener { _, event ->
             scaleGestureDetector.onTouchEvent(event)
-            if (event.action == MotionEvent.ACTION_UP) {
-                view.performClick()
+            if (!scaleGestureDetector.isInProgress) {
+                gestureDetector.onTouchEvent(event)
             }
             true
         }
