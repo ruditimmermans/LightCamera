@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var barcodeScanner: BarcodeScanner
     private var flashMode = ImageCapture.FLASH_MODE_OFF
     private var qrScannerEnabled = false
+    private var tapToTakePhoto = true
     private var lensFacing = CameraSelector.LENS_FACING_BACK
     private var screenAspectRatio = AspectRatio.RATIO_4_3
     private var lastPhotoTime = 0L
@@ -136,6 +137,8 @@ class MainActivity : AppCompatActivity() {
         val ratioValue = sharedPrefs.getString(KEY_ASPECT_RATIO, "0")?.toInt() ?: 0
         screenAspectRatio = if (ratioValue == 1) AspectRatio.RATIO_16_9 else AspectRatio.RATIO_4_3
         
+        tapToTakePhoto = sharedPrefs.getBoolean(KEY_TAP_TO_TAKE_PHOTO, true)
+
         // lensFacing is still in custom sharedPrefs or default? 
         // Let's move everything to default.
         lensFacing = sharedPrefs.getInt(KEY_LENS_FACING, CameraSelector.LENS_FACING_BACK)
@@ -200,8 +203,10 @@ class MainActivity : AppCompatActivity() {
         } else if (event.action == MotionEvent.ACTION_BUTTON_PRESS &&
             (event.buttonState == MotionEvent.BUTTON_PRIMARY ||
                     event.buttonState == MotionEvent.BUTTON_STYLUS_PRIMARY)) {
-            takePhoto()
-            return true
+            if (tapToTakePhoto) {
+                takePhoto()
+                return true
+            }
         }
         return super.onGenericMotionEvent(event)
     }
@@ -234,8 +239,11 @@ class MainActivity : AppCompatActivity() {
         
         val gestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
             override fun onSingleTapUp(e: MotionEvent): Boolean {
-                takePhoto()
-                return true
+                if (tapToTakePhoto) {
+                    takePhoto()
+                    return true
+                }
+                return false
             }
         })
 
@@ -543,6 +551,7 @@ class MainActivity : AppCompatActivity() {
         private const val KEY_LENS_FACING = "lens_facing"
         private const val KEY_ASPECT_RATIO = "aspect_ratio"
         private const val KEY_BUTTON_COLOR = "button_color"
+        private const val KEY_TAP_TO_TAKE_PHOTO = "tap_to_take_photo"
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS = mutableListOf(

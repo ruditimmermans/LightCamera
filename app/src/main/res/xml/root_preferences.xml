@@ -19,6 +19,12 @@
             app:title="@string/aspect_ratio_title"
             app:useSimpleSummaryProvider="true" />
 
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="tap_to_take_photo"
+            app:title="@string/tap_to_take_photo_title"
+            app:summary="@string/tap_to_take_photo_summary" />
+
     </PreferenceCategory>
 
     <PreferenceCategory app:title="Appearance">

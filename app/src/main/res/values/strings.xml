@@ -43,6 +43,8 @@
     <string name="button_color_summary">Choose the color of the UI buttons</string>
     <string name="aspect_ratio_title">Aspect Ratio</string>
     <string name="aspect_ratio_summary">Choose the camera aspect ratio</string>
+    <string name="tap_to_take_photo_title">Tap to Take Photo</string>
+    <string name="tap_to_take_photo_summary">Take a photo when clicking on the screen</string>
 
     <string name="no_app_to_open_photo">No app to open photo</string>
 

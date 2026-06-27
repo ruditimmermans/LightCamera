@@ -43,6 +43,8 @@
     <string name="button_color_summary">Kies de kleur van de UI-knoppen</string>
     <string name="aspect_ratio_title">Beeldverhouding</string>
     <string name="aspect_ratio_summary">Kies de beeldverhouding van de camera</string>
+    <string name="tap_to_take_photo_title">Tikken voor foto</string>
+    <string name="tap_to_take_photo_summary">Maak een foto bij het klikken op het scherm</string>
 
     <string-array name="flash_modes">
         <item>Uit</item>
