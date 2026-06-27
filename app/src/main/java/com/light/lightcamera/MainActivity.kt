@@ -91,7 +91,6 @@ class MainActivity : AppCompatActivity() {
             .build()
         barcodeScanner = BarcodeScanning.getClient(options)
         
-        viewBinding.viewFinder.setOnClickListener { takePhoto() }
         updateQrIcon()
         setupZoom()
     }
@@ -198,8 +197,28 @@ class MainActivity : AppCompatActivity() {
                 camera?.cameraControl?.setZoomRatio(newZoom)
                 return true
             }
+        } else if (event.action == MotionEvent.ACTION_BUTTON_PRESS &&
+            (event.buttonState == MotionEvent.BUTTON_PRIMARY ||
+                    event.buttonState == MotionEvent.BUTTON_STYLUS_PRIMARY)) {
+            takePhoto()
+            return true
         }
         return super.onGenericMotionEvent(event)
+    }
+
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+        if (event.action == KeyEvent.ACTION_DOWN) {
+            when (event.keyCode) {
+                KeyEvent.KEYCODE_DPAD_CENTER,
+                KeyEvent.KEYCODE_ENTER,
+                KeyEvent.KEYCODE_NUMPAD_ENTER,
+                KeyEvent.KEYCODE_SPACE -> {
+                    takePhoto()
+                    return true
+                }
+            }
+        }
+        return super.dispatchKeyEvent(event)
     }
 
     private fun setupZoom() {
@@ -212,19 +231,17 @@ class MainActivity : AppCompatActivity() {
             }
         }
         val scaleGestureDetector = ScaleGestureDetector(this, listener)
-
+        
         val gestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
             override fun onSingleTapUp(e: MotionEvent): Boolean {
-                viewBinding.viewFinder.performClick()
+                takePhoto()
                 return true
             }
         })
 
         viewBinding.viewFinder.setOnTouchListener { _, event ->
             scaleGestureDetector.onTouchEvent(event)
-            if (!scaleGestureDetector.isInProgress) {
-                gestureDetector.onTouchEvent(event)
-            }
+            gestureDetector.onTouchEvent(event)
             true
         }
 
