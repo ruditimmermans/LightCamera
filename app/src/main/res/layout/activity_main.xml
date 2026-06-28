@@ -23,22 +23,6 @@
         android:background="@android:color/white"
         android:visibility="gone" />
 
-    <ImageButton
-        android:id="@+id/settingsButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="@string/settings"
-        android:focusable="false"
-        android:padding="8dp"
-        android:scaleType="fitCenter"
-        android:src="@android:drawable/ic_menu_preferences"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@android:color/white" />
-
     <SeekBar
         android:id="@+id/zoomSeekBar"
         android:layout_width="0dp"
@@ -71,10 +55,26 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageButton
-            android:id="@+id/qrButton"
+            android:id="@+id/settingsButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/settings"
+            android:focusable="false"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:src="@android:drawable/ic_menu_preferences"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@android:color/white" />
+
+        <ImageButton
+            android:id="@+id/qrButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="4dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/scan_qr"
             android:focusable="false"
@@ -82,7 +82,7 @@
             android:scaleType="fitCenter"
             android:src="@drawable/ic_qr_code"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/settingsButton"
             app:layout_constraintTop_toTopOf="parent"
             app:tint="@android:color/white" />
 

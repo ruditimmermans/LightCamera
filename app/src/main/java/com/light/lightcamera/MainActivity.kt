@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var barcodeScanner: BarcodeScanner
     private var flashMode = ImageCapture.FLASH_MODE_OFF
     private var qrScannerEnabled = false
-    private var tapToTakePhoto = true
+    private var tapToTakePhoto = false
     private var lensFacing = CameraSelector.LENS_FACING_BACK
     private var screenAspectRatio = AspectRatio.RATIO_4_3
     private var lastPhotoTime = 0L
@@ -137,7 +137,7 @@ class MainActivity : AppCompatActivity() {
         val ratioValue = sharedPrefs.getString(KEY_ASPECT_RATIO, "0")?.toInt() ?: 0
         screenAspectRatio = if (ratioValue == 1) AspectRatio.RATIO_16_9 else AspectRatio.RATIO_4_3
         
-        tapToTakePhoto = sharedPrefs.getBoolean(KEY_TAP_TO_TAKE_PHOTO, true)
+        tapToTakePhoto = sharedPrefs.getBoolean(KEY_TAP_TO_TAKE_PHOTO, false)
 
         // lensFacing is still in custom sharedPrefs or default? 
         // Let's move everything to default.
