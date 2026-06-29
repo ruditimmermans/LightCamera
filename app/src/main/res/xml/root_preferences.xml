@@ -37,6 +37,14 @@
     </PreferenceCategory>
 
     <PreferenceCategory app:title="Info">
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="auto_check_updates"
+            app:summary="@string/auto_check_updates_summary"
+            app:title="@string/auto_check_updates_title" />
+        <Preference
+            app:key="check_for_updates"
+            app:title="@string/check_for_updates" />
         <Preference
             app:key="about"
             app:summary="App version and license information"

@@ -72,4 +72,14 @@
     <string name="no_app_to_open_video">No app to open video</string>
     <string name="no_app_to_open_url">No app found to open URL</string>
     <string name="photo_captured">Photo captured at %1$s</string>
+
+    <string name="check_for_updates">Check for Updates</string>
+    <string name="checking_updates">Checking for updates...</string>
+    <string name="update_available">Update available: %1$s</string>
+    <string name="update_not_available">Your app is up to date.</string>
+    <string name="update_error">Error checking for updates.</string>
+    <string name="download_update">Download</string>
+
+    <string name="auto_check_updates_title">Auto-check for updates</string>
+    <string name="auto_check_updates_summary">Automatically check for new versions on startup</string>
 </resources>

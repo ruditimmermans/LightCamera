@@ -21,6 +21,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.video.*
@@ -35,6 +36,8 @@ import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.ZoomSuggestionOptions
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
@@ -94,6 +97,28 @@ class MainActivity : AppCompatActivity() {
         
         updateQrIcon()
         setupZoom()
+        
+        checkForUpdates()
+    }
+
+    private fun checkForUpdates() {
+        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
+        if (!sharedPrefs.getBoolean("auto_check_updates", true)) return
+
+        val updateManager = UpdateManager(this)
+        lifecycleScope.launch {
+            val result = updateManager.checkForUpdates()
+            if (result is UpdateManager.UpdateResult.NewVersionAvailable) {
+                MaterialAlertDialogBuilder(this@MainActivity)
+                    .setTitle(R.string.check_for_updates)
+                    .setMessage(getString(R.string.update_available, result.version))
+                    .setPositiveButton(R.string.download_update) { _, _ ->
+                        updateManager.openDownloadUrl(result.downloadUrl)
+                    }
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show()
+            }
+        }
     }
 
     override fun onResume() {

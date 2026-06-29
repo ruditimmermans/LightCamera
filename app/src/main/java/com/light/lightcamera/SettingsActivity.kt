@@ -7,10 +7,12 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.launch
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -39,6 +41,39 @@ class SettingsActivity : AppCompatActivity() {
             findPreference<Preference>("button_color")?.setOnPreferenceClickListener {
                 showColorPickerDialog()
                 true
+            }
+
+            findPreference<Preference>("check_for_updates")?.setOnPreferenceClickListener {
+                checkForUpdates()
+                true
+            }
+        }
+
+        private fun checkForUpdates() {
+            val updateManager = UpdateManager(requireContext())
+            
+            lifecycleScope.launch {
+                Toast.makeText(requireContext(), R.string.checking_updates, Toast.LENGTH_SHORT).show()
+                val result = updateManager.checkForUpdates()
+                
+                when (result) {
+                    is UpdateManager.UpdateResult.NewVersionAvailable -> {
+                        MaterialAlertDialogBuilder(requireContext())
+                            .setTitle(R.string.check_for_updates)
+                            .setMessage(getString(R.string.update_available, result.version))
+                            .setPositiveButton(R.string.download_update) { _, _ ->
+                                updateManager.openDownloadUrl(result.downloadUrl)
+                            }
+                            .setNegativeButton(android.R.string.cancel, null)
+                            .show()
+                    }
+                    is UpdateManager.UpdateResult.UpToDate -> {
+                        Toast.makeText(requireContext(), R.string.update_not_available, Toast.LENGTH_SHORT).show()
+                    }
+                    is UpdateManager.UpdateResult.Error -> {
+                        Toast.makeText(requireContext(), R.string.update_error, Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
 

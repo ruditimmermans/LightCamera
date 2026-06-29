@@ -56,4 +56,14 @@
     <string name="no_app_to_open_video">Geen app gevonden om video te openen</string>
     <string name="no_app_to_open_url">Geen app gevonden om URL te openen</string>
     <string name="photo_captured">Foto gemaakt om %1$s</string>
+
+    <string name="check_for_updates">Controleren op updates</string>
+    <string name="checking_updates">Controleren op updates...</string>
+    <string name="update_available">Update beschikbaar: %1$s</string>
+    <string name="update_not_available">Je app is up-to-date.</string>
+    <string name="update_error">Fout bij controleren op updates.</string>
+    <string name="download_update">Downloaden</string>
+
+    <string name="auto_check_updates_title">Automatisch controleren op updates</string>
+    <string name="auto_check_updates_summary">Automatisch controleren op nieuwe versies bij het opstarten</string>
 </resources>
