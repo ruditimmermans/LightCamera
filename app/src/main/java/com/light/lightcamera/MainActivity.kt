@@ -54,6 +54,8 @@ class MainActivity : AppCompatActivity() {
     private var flashMode = ImageCapture.FLASH_MODE_OFF
     private var qrScannerEnabled = false
     private var tapToTakePhoto = false
+    private var autoZoom = true
+    private var storageLocation = "internal"
     private var lensFacing = CameraSelector.LENS_FACING_BACK
     private var screenAspectRatio = AspectRatio.RATIO_4_3
     private var lastPhotoTime = 0L
@@ -88,8 +90,12 @@ class MainActivity : AppCompatActivity() {
         
         val options = BarcodeScannerOptions.Builder()
             .setZoomSuggestionOptions(ZoomSuggestionOptions.Builder { zoomRatio ->
-                camera?.cameraControl?.setZoomRatio(zoomRatio)
-                true
+                if (autoZoom) {
+                    camera?.cameraControl?.setZoomRatio(zoomRatio)
+                    true
+                } else {
+                    false
+                }
             }.build())
             .enableAllPotentialBarcodes()
             .build()
@@ -163,6 +169,8 @@ class MainActivity : AppCompatActivity() {
         screenAspectRatio = if (ratioValue == 1) AspectRatio.RATIO_16_9 else AspectRatio.RATIO_4_3
         
         tapToTakePhoto = sharedPrefs.getBoolean(KEY_TAP_TO_TAKE_PHOTO, false)
+        autoZoom = sharedPrefs.getBoolean(KEY_AUTO_ZOOM, true)
+        storageLocation = sharedPrefs.getString(KEY_STORAGE_LOCATION, "internal") ?: "internal"
 
         // lensFacing is still in custom sharedPrefs or default? 
         // Let's move everything to default.
@@ -358,8 +366,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        val imageCollection = if (storageLocation == "sd_card") {
+            getSDCardUri(MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        } else {
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        }
+
         val outputOptions = ImageCapture.OutputFileOptions
-            .Builder(contentResolver, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+            .Builder(contentResolver, imageCollection, contentValues)
             .build()
 
         imageCapture.takePicture(
@@ -401,8 +415,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        val videoCollection = if (storageLocation == "sd_card") {
+            getSDCardUri(MediaStore.Video.Media.EXTERNAL_CONTENT_URI)
+        } else {
+            MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+        }
+
         val mediaStoreOutputOptions = MediaStoreOutputOptions
-            .Builder(contentResolver, MediaStore.Video.Media.EXTERNAL_CONTENT_URI)
+            .Builder(contentResolver, videoCollection)
             .setContentValues(contentValues)
             .build()
 
@@ -571,12 +591,31 @@ class MainActivity : AppCompatActivity() {
         cameraExecutor.shutdown()
     }
 
+    private fun getSDCardUri(defaultUri: Uri): Uri {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) return defaultUri
+        
+        val volumes = MediaStore.getExternalVolumeNames(this)
+        val sdCardVolume = volumes.find { it != MediaStore.VOLUME_EXTERNAL_PRIMARY && it != MediaStore.VOLUME_EXTERNAL }
+        
+        return if (sdCardVolume != null) {
+            if (defaultUri == MediaStore.Images.Media.EXTERNAL_CONTENT_URI) {
+                MediaStore.Images.Media.getContentUri(sdCardVolume)
+            } else {
+                MediaStore.Video.Media.getContentUri(sdCardVolume)
+            }
+        } else {
+            defaultUri
+        }
+    }
+
     companion object {
         private const val KEY_FLASH_MODE = "flash_mode"
         private const val KEY_LENS_FACING = "lens_facing"
         private const val KEY_ASPECT_RATIO = "aspect_ratio"
         private const val KEY_BUTTON_COLOR = "button_color"
         private const val KEY_TAP_TO_TAKE_PHOTO = "tap_to_take_photo"
+        private const val KEY_AUTO_ZOOM = "auto_zoom"
+        private const val KEY_STORAGE_LOCATION = "storage_location"
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS = mutableListOf(

@@ -45,6 +45,8 @@
     <string name="aspect_ratio_summary">Kies de beeldverhouding van de camera</string>
     <string name="tap_to_take_photo_title">Tikken voor foto</string>
     <string name="tap_to_take_photo_summary">Maak een foto bij het klikken op het scherm</string>
+    <string name="auto_zoom_title">Automatisch zoomen</string>
+    <string name="auto_zoom_summary">Automatisch zoomen wanneer een gezicht of object wordt gedetecteerd</string>
 
     <string-array name="flash_modes">
         <item>Uit</item>
@@ -66,4 +68,12 @@
 
     <string name="auto_check_updates_title">Automatisch controleren op updates</string>
     <string name="auto_check_updates_summary">Automatisch controleren op nieuwe versies bij het opstarten</string>
+
+    <string name="storage_location_title">Opslaglocatie</string>
+    <string name="storage_location_summary">Kies waar foto\'s en video\'s worden opgeslagen</string>
+
+    <string-array name="storage_locations">
+        <item>Interne opslag</item>
+        <item>SD-kaart</item>
+    </string-array>
 </resources>

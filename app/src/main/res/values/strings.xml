@@ -45,6 +45,8 @@
     <string name="aspect_ratio_summary">Choose the camera aspect ratio</string>
     <string name="tap_to_take_photo_title">Tap to Take Photo</string>
     <string name="tap_to_take_photo_summary">Take a photo when clicking on the screen</string>
+    <string name="auto_zoom_title">Automatic Zoom</string>
+    <string name="auto_zoom_summary">Automatically zoom when a face or object is detected</string>
 
     <string name="no_app_to_open_photo">No app to open photo</string>
 
@@ -82,4 +84,15 @@
 
     <string name="auto_check_updates_title">Auto-check for updates</string>
     <string name="auto_check_updates_summary">Automatically check for new versions on startup</string>
+
+    <string name="storage_location_title">Storage Location</string>
+    <string name="storage_location_summary">Choose where to save photos and videos</string>
+    <string-array name="storage_locations">
+        <item>Internal Storage</item>
+        <item>SD Card</item>
+    </string-array>
+    <string-array name="storage_location_values">
+        <item>internal</item>
+        <item>sd_card</item>
+    </string-array>
 </resources>
