@@ -1,4 +1,4 @@
-val appVersionName = "1.6"
+val appVersionName = "1.7"
 
 plugins {
     alias(libs.plugins.android.application)
@@ -6,7 +6,7 @@ plugins {
 }
 
 base {
-    archivesName = "LightCamera-v$appVersionName"
+    archivesName = "BenOSCamera-v$appVersionName"
 }
 
 android {
@@ -17,7 +17,7 @@ android {
         applicationId = "com.light.lightcamera"
         minSdk = 26
         targetSdk = 37
-        versionCode = 7
+        versionCode = 8
         versionName = appVersionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

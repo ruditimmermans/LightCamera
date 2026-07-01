@@ -13,8 +13,8 @@ import java.net.URL
 class UpdateManager(private val context: Context) {
 
     companion object {
-        private const val LATEST_RELEASE_URL = "https://api.github.com/repos/ruditimmermans/LightCamera/releases/latest"
-        private const val RELEASES_PAGE_URL = "https://github.com/ruditimmermans/LightCamera/releases"
+        private const val LATEST_RELEASE_URL = "https://api.github.com/repos/ruditimmermans/BenOSCamera/releases/latest"
+        private const val RELEASES_PAGE_URL = "https://github.com/ruditimmermans/BenOSCamera/releases"
     }
 
     suspend fun checkForUpdates(): UpdateResult = withContext(Dispatchers.IO) {

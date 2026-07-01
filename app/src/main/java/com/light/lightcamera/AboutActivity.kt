@@ -1,7 +1,10 @@
 package com.light.lightcamera
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import com.light.lightcamera.databinding.ActivityAboutBinding
 
 class AboutActivity : AppCompatActivity() {
@@ -23,6 +26,15 @@ class AboutActivity : AppCompatActivity() {
         }
 
         binding.versionText.text = getString(R.string.version_format, versionName)
+
+        binding.donateButton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, getString(R.string.donate_url).toUri())
+            try {
+                startActivity(intent)
+            } catch (_: Exception) {
+                Toast.makeText(this, R.string.no_app_to_open_url, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

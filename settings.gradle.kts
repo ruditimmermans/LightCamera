@@ -22,5 +22,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Light Camera"
+rootProject.name = "BenOS Camera"
 include(":app")
