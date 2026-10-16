@@ -1,0 +1,162 @@
+<resources>
+    <string name="app_name">LightCamera</string>
+    <string name="take_photo">Foto</string>
+    <string name="record_video">Opnemen</string>
+    <string name="stop_video">Stop</string>
+    <string name="open_videos">Video\'s</string>
+    <string name="scan_qr">Scan QR-code</string>
+    <string name="switch_camera">Camera wisselen</string>
+    <string name="gallery">Gallerij</string>
+
+    <string name="scanned_result">Gescand: %1$s</string>
+    <string name="flash_off">Flitser uit</string>
+    <string name="flash_on">Flitser aan</string>
+    <string name="flash_auto">Flitser automatisch</string>
+    <string name="aspect_ratio_4_3">4:3</string>
+    <string name="aspect_ratio_16_9">16:9</string>
+    <string name="about">Over</string>
+    <string name="copyright">Copyright 2026&#8211;2027 door Rudi Timmermans</string>
+    <string name="license_text">Dit programma is vrije software: u kunt het herdistribueren en/of wijzigen onder de voorwaarden van de GNU General Public License zoals gepubliceerd door de Free Software Foundation, ofwel versie 3 van de Licentie, of (naar uw keuze) elke latere versie. \n\nDit programma wordt gedistribueerd in de hoop dat het nuttig zal zijn, maar ZONDER ENIGE GARANTIE; zelfs zonder de impliciete garantie van verkoopbaarheid of geschiktheid voor een bepaald doel. Zie de GNU General Public License voor meer details. \n\nU zou een kopie van de GNU General Public License moeten hebben ontvangen samen met dit programma. Indien dit niet het geval is, zie http://www.gnu.org/licenses.</string>
+    <string name="version_format">Versie: %1$s</string>
+    <string name="unknown">Onbekend</string>
+    <string name="permission_denied">Machtigingen niet verleend door de gebruiker.</string>
+    <string name="donate">Doneer aan LightCamera</string>
+    <string name="donate_url">https://ko-fi.com/ben9412345</string>
+    <string name="donate_paypal">Steun de ontwikkelaar op Ko-fi</string>
+    <string name="donate_paypal_url">https://ko-fi.com/ruditimmermans</string>
+    <string name="report_issues">Problemen melden</string>
+    <string name="report_issues_url">https://github.com/ruditimmermans/LightCamera/issues</string>
+    <string name="open_with">Openen met</string>
+    <string name="change_button_color">Knopkleur</string>
+    <string name="select_color">Selecteer kleur</string>
+    <string name="custom_color">Aangepast...</string>
+    <string name="enter_hex_color">Voer hex-kleur in (bijv. #FF0000)</string>
+    <string name="invalid_color">Ongeldige kleurindeling</string>
+    <string name="color_updated">Kleur bijgewerkt</string>
+    <string name="color_white">Wit</string>
+    <string name="color_red">Rood</string>
+    <string name="color_green">Groen</string>
+    <string name="color_blue">Blauw</string>
+    <string name="color_yellow">Geel</string>
+    <string name="color_cyan">Cyaan</string>
+    <string name="color_magenta">Magenta</string>
+    <string name="color_orange">Oranje</string>
+    <string name="color_purple">Paars</string>
+
+    <string name="settings">Instellingen</string>
+    <string name="flash_mode_title">Flitser-modus</string>
+    <string name="flash_mode_summary">Stel de standaard flitser-modus in</string>
+    <string name="button_color_title">Knopkleur</string>
+    <string name="button_color_summary">Kies de kleur van de UI-knoppen</string>
+    <string name="aspect_ratio_title">Beeldverhouding</string>
+    <string name="aspect_ratio_summary">Kies de beeldverhouding van de camera</string>
+    <string name="tap_to_take_photo_title">Tikken voor foto</string>
+    <string name="tap_to_take_photo_summary">Maak een foto bij het klikken op het scherm</string>
+    <string name="auto_zoom_title">Automatisch zoomen</string>
+    <string name="auto_zoom_summary">Automatisch zoomen wanneer een gezicht of object wordt gedetecteerd</string>
+
+    <string-array name="flash_modes">
+        <item>Uit</item>
+        <item>Aan</item>
+        <item>Automatisch</item>
+    </string-array>
+
+    <string name="no_app_to_open_photo">Geen app gevonden om foto te openen</string>
+    <string name="no_app_to_open_video">Geen app gevonden om video te openen</string>
+    <string name="no_app_to_open_url">Geen app gevonden om URL te openen</string>
+    <string name="photo_captured">Foto gemaakt om %1$s</string>
+
+    <string name="check_for_updates">Controleren op updates</string>
+    <string name="checking_updates">Controleren op updates...</string>
+    <string name="update_available">Update beschikbaar: %1$s</string>
+    <string name="update_not_available">Je app is up-to-date.</string>
+    <string name="update_error">Fout bij controleren op updates.</string>
+    <string name="download_update">Downloaden</string>
+
+    <string name="auto_check_updates_title">Automatisch controleren op updates</string>
+    <string name="auto_check_updates_summary">Automatisch controleren op nieuwe versies bij het opstarten</string>
+
+    <string name="storage_location_title">Opslaglocatie</string>
+    <string name="storage_location_summary">Kies waar foto\'s en video\'s worden opgeslagen</string>
+
+    <string-array name="storage_locations">
+        <item>Interne opslag</item>
+        <item>SD-kaart</item>
+    </string-array>
+
+    <string name="category_camera_settings">Camera-instellingen</string>
+    <string name="category_screen_recorder">Schermrecorder-instellingen</string>
+    <string name="category_appearance">Uiterlijk</string>
+    <string name="category_info">Info</string>
+    <string name="about_summary">App-versie en licentie-informatie</string>
+    <string name="about_support_header">Ondersteuning &amp; Ontwikkeling</string>
+    <string name="about_legal_header">Juridische Informatie</string>
+
+    <!-- Screen Recorder Strings -->
+    <string name="screen_record">Schermopname</string>
+    <string name="start_screen_record">Scherm opnemen</string>
+    <string name="stop_screen_record">Opname stoppen</string>
+    <string name="pause_screen_record">Opname pauzeren</string>
+    <string name="resume_screen_record">Opname hervatten</string>
+    <string name="screen_record_started">Schermopname gestart</string>
+    <string name="screen_record_stopped">Schermopname opgeslagen: %1$s</string>
+    <string name="screen_record_notification_title">Schermopname</string>
+    <string name="screen_record_notification_text">Opname bezig…</string>
+    <string name="overlay_permission_title">Machtiging voor weergave boven andere apps</string>
+    <string name="overlay_permission_message">Schermrecorder heeft toestemming nodig om bedieningselementen over andere apps weer te geven tijdens het opnemen.</string>
+    <string name="grant_permission">Machtiging verlenen</string>
+    <string name="screen_record_resolution_title">Videokwaliteit</string>
+    <string name="screen_record_resolution_summary">Kies schermopname resolutie</string>
+    <string name="screen_record_fps_title">Framesnelheid</string>
+    <string name="screen_record_fps_summary">Kies doelframesnelheid (FPS)</string>
+    <string name="screen_record_audio_title">Audiobron</string>
+    <string name="screen_record_audio_summary">Selecteer audio-invoer voor opname</string>
+    <string name="screen_record_overlay_title">Zwevende bedieningselementen</string>
+    <string name="screen_record_overlay_summary">Toon versleepbare zwevende widget over andere apps tijdens opname</string>
+    <string name="screen_record_countdown_title">Apteltimer</string>
+    <string name="screen_record_countdown_summary">Vertraging voor start van schermopname</string>
+
+    <string-array name="screen_record_resolutions">
+        <item>Eigen schermresolutie</item>
+        <item>1080p (Full HD)</item>
+        <item>720p (HD)</item>
+        <item>480p (SD)</item>
+    </string-array>
+    <string-array name="screen_record_resolution_values">
+        <item>native</item>
+        <item>1080p</item>
+        <item>720p</item>
+        <item>480p</item>
+    </string-array>
+
+    <string-array name="screen_record_fps_entries">
+        <item>60 FPS</item>
+        <item>30 FPS</item>
+    </string-array>
+    <string-array name="screen_record_fps_values">
+        <item>60</item>
+        <item>30</item>
+    </string-array>
+
+    <string-array name="screen_record_audio_entries">
+        <item>Microfoon</item>
+        <item>Interne systeem-audio</item>
+        <item>Gedempt (Geen geluid)</item>
+    </string-array>
+    <string-array name="screen_record_audio_values">
+        <item>mic</item>
+        <item>internal</item>
+        <item>muted</item>
+    </string-array>
+
+    <string-array name="screen_record_countdown_entries">
+        <item>Uit (Direct)</item>
+        <item>3 seconden</item>
+        <item>5 seconden</item>
+    </string-array>
+    <string-array name="screen_record_countdown_values">
+        <item>0</item>
+        <item>3</item>
+        <item>5</item>
+    </string-array>
+</resources>
