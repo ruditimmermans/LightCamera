@@ -178,4 +178,6 @@
         <item>3</item>
         <item>5</item>
     </string-array>
+    <string name="fido_clip_label">Lien FIDO</string>
+    <string name="fido_link_processed">Lien FIDO copié dans le presse-papiers</string>
 </resources>

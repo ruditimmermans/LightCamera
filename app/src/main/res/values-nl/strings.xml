@@ -159,4 +159,6 @@
         <item>3</item>
         <item>5</item>
     </string-array>
+    <string name="fido_clip_label">FIDO-link</string>
+    <string name="fido_link_processed">FIDO-link gekopieerd naar klembord</string>
 </resources>

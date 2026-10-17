@@ -70,6 +70,17 @@
                 <action android:name="android.media.action.VIDEO_CAPTURE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+
+            <!-- FIDO / WebAuthn link intents -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="fido" />
+                <data android:scheme="fido2" />
+                <data android:scheme="webauthn" />
+                <data android:scheme="fido-u2f" />
+            </intent-filter>
         </activity>
 
         <!-- QR code to clipboard for external apps. Own task so that
@@ -84,6 +95,15 @@
             <intent-filter>
                 <action android:name="com.light.lightcamera.action.SCAN_QR_TO_CLIPBOARD" />
                 <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="fido" />
+                <data android:scheme="fido2" />
+                <data android:scheme="webauthn" />
+                <data android:scheme="fido-u2f" />
             </intent-filter>
         </activity>
 

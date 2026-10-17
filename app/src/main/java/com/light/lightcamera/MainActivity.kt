@@ -190,6 +190,29 @@ open class MainActivity : AppCompatActivity() {
         } else {
             checkForUpdates()
         }
+
+        handleIncomingFidoIntent(intent)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        handleIncomingFidoIntent(intent)
+    }
+
+    private fun handleIncomingFidoIntent(intent: Intent?) {
+        val data = intent?.data ?: return
+        val scheme = data.scheme?.lowercase(Locale.US)
+        if (scheme == "fido" || scheme == "fido2" || scheme == "webauthn" || scheme == "fido-u2f") {
+            val fidoUri = data.toString()
+            val clipboard = getSystemService(ClipboardManager::class.java)
+            val clip = ClipData.newPlainText(getString(R.string.fido_clip_label), fidoUri)
+            clipboard.setPrimaryClip(clip)
+            Toast.makeText(this, R.string.fido_link_processed, Toast.LENGTH_LONG).show()
+            if (qrToClipboardMode) {
+                finish()
+            }
+        }
     }
 
     private fun setupQrToClipboardMode() {
@@ -998,6 +1021,17 @@ open class MainActivity : AppCompatActivity() {
         }, ContextCompat.getMainExecutor(this))
     }
 
+    private fun isFidoUri(uriString: String): Boolean {
+        val lower = uriString.lowercase(Locale.US)
+        return lower.startsWith("fido://") ||
+                lower.startsWith("fido2://") ||
+                lower.startsWith("webauthn://") ||
+                lower.startsWith("fido-u2f://") ||
+                lower.startsWith("fido:") ||
+                lower.startsWith("fido2:") ||
+                lower.startsWith("webauthn:")
+    }
+
     @androidx.annotation.OptIn(ExperimentalGetImage::class)
     private fun processImageProxy(imageProxy: ImageProxy) {
         if (!qrScannerEnabled) {
@@ -1017,23 +1051,28 @@ open class MainActivity : AppCompatActivity() {
                             break
                         }
 
-                        if (barcode.valueType == Barcode.TYPE_URL) {
-                            val url = barcode.url?.url
-                            if (url != null) {
-                                qrScannerEnabled = false
-                                runOnUiThread {
-                                    updateQrIcon()
-                                    camera?.cameraControl?.setZoomRatio(1f)
-                                    try {
-                                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                                        startActivity(intent)
-                                    } catch (e: Exception) {
-                                        Log.e("MainActivity", "Failed to open URL: $url", e)
-                                        Toast.makeText(this, getString(R.string.no_app_to_open_url), Toast.LENGTH_SHORT).show()
-                                    }
+                        val targetUri = if (barcode.valueType == Barcode.TYPE_URL) {
+                            barcode.url?.url ?: rawValue
+                        } else if (isFidoUri(rawValue) || rawValue.startsWith("http://") || rawValue.startsWith("https://")) {
+                            rawValue
+                        } else {
+                            null
+                        }
+
+                        if (targetUri != null) {
+                            qrScannerEnabled = false
+                            runOnUiThread {
+                                updateQrIcon()
+                                camera?.cameraControl?.setZoomRatio(1f)
+                                try {
+                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(targetUri))
+                                    startActivity(intent)
+                                } catch (e: Exception) {
+                                    Log.e("MainActivity", "Failed to open URI: $targetUri", e)
+                                    Toast.makeText(this, getString(R.string.no_app_to_open_url), Toast.LENGTH_SHORT).show()
                                 }
-                                break
                             }
+                            break
                         }
 
                         runOnUiThread {

@@ -181,4 +181,6 @@
     </string-array>
     <string name="qr_copied_to_clipboard">Copied to clipboard</string>
     <string name="qr_clip_label">QR code</string>
+    <string name="fido_clip_label">FIDO link</string>
+    <string name="fido_link_processed">FIDO link copied to clipboard</string>
 </resources>

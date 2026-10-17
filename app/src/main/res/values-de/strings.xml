@@ -178,4 +178,6 @@
         <item>3</item>
         <item>5</item>
     </string-array>
+    <string name="fido_clip_label">FIDO-Link</string>
+    <string name="fido_link_processed">FIDO-Link in Zwischenablage kopiert</string>
 </resources>
