@@ -39,7 +39,18 @@ class UpdateManager(private val context: Context) {
                 val currentVersion = getCurrentVersion()
 
                 if (isNewerVersion(latestVersion, currentVersion)) {
-                    val downloadUrl = RELEASES_PAGE_URL
+                    var downloadUrl = RELEASES_PAGE_URL
+                    val assets = json.optJSONArray("assets")
+                    if (assets != null) {
+                        for (i in 0 until assets.length()) {
+                            val asset = assets.optJSONObject(i)
+                            val name = asset?.optString("name") ?: ""
+                            if (name.endsWith(".apk", ignoreCase = true)) {
+                                downloadUrl = asset?.optString("browser_download_url") ?: RELEASES_PAGE_URL
+                                break
+                            }
+                        }
+                    }
                     UpdateResult.NewVersionAvailable(latestVersion, downloadUrl)
                 } else {
                     UpdateResult.UpToDate
@@ -80,6 +91,14 @@ class UpdateManager(private val context: Context) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
+    }
+
+    fun downloadOrOpenUpdate(url: String, version: String) {
+        if (url.endsWith(".apk", ignoreCase = true) || url.contains(".apk?", ignoreCase = true)) {
+            downloadAndInstallUpdate(url, version)
+        } else {
+            openDownloadUrl(url)
+        }
     }
 
     fun downloadAndInstallUpdate(url: String, version: String) {

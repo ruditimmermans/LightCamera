@@ -74,7 +74,7 @@ class SettingsActivity : AppCompatActivity() {
                             .setTitle(R.string.check_for_updates)
                             .setMessage(getString(R.string.update_available, result.version))
                             .setPositiveButton(R.string.download_update) { _, _ ->
-                                updateManager.openDownloadUrl(result.downloadUrl)
+                                updateManager.downloadOrOpenUpdate(result.downloadUrl, result.version)
                             }
                             .setNegativeButton(android.R.string.cancel, null)
                             .create()
