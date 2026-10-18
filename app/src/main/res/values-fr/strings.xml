@@ -178,6 +178,12 @@
         <item>3</item>
         <item>5</item>
     </string-array>
+    <string name="qr_copied_to_clipboard">Copié dans le presse-papiers</string>
+    <string name="qr_clip_label">Code QR</string>
     <string name="fido_clip_label">Lien FIDO</string>
     <string name="fido_link_processed">Lien FIDO copié dans le presse-papiers</string>
+
+    <string name="default_gallery_title">Application Galerie par défaut</string>
+    <string name="default_gallery_summary">Choisissez quelle application de galerie ouvrir</string>
+    <string name="default_gallery_system">Système par défaut</string>
 </resources>

@@ -183,4 +183,8 @@
     <string name="qr_clip_label">QR code</string>
     <string name="fido_clip_label">FIDO link</string>
     <string name="fido_link_processed">FIDO link copied to clipboard</string>
+
+    <string name="default_gallery_title">Default Gallery App</string>
+    <string name="default_gallery_summary">Choose which gallery app to open</string>
+    <string name="default_gallery_system">System Default</string>
 </resources>

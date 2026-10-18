@@ -36,6 +36,14 @@
             app:summary="@string/storage_location_summary"
             app:useSimpleSummaryProvider="true" />
 
+        <ListPreference
+            app:defaultValue="default"
+            app:icon="@drawable/ic_gallery"
+            app:key="default_gallery"
+            app:title="@string/default_gallery_title"
+            app:summary="@string/default_gallery_summary"
+            app:useSimpleSummaryProvider="true" />
+
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/category_screen_recorder">

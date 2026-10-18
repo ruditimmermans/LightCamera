@@ -178,6 +178,12 @@
         <item>3</item>
         <item>5</item>
     </string-array>
+    <string name="qr_copied_to_clipboard">In die Zwischenablage kopiert</string>
+    <string name="qr_clip_label">QR-Code</string>
     <string name="fido_clip_label">FIDO-Link</string>
     <string name="fido_link_processed">FIDO-Link in Zwischenablage kopiert</string>
+
+    <string name="default_gallery_title">Standard-Galerie-App</string>
+    <string name="default_gallery_summary">Wählen Sie, welche Galerie-App geöffnet werden soll</string>
+    <string name="default_gallery_system">Systemstandard</string>
 </resources>

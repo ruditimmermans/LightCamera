@@ -636,8 +636,29 @@ open class MainActivity : AppCompatActivity() {
     }
 
     private fun openGallery() {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.type = "image/*"
+        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val defaultGalleryPackage = sharedPrefs.getString(KEY_DEFAULT_GALLERY, "default")
+
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            type = "image/*"
+        }
+
+        if (!defaultGalleryPackage.isNullOrEmpty() && defaultGalleryPackage != "default") {
+            intent.setPackage(defaultGalleryPackage)
+            if (intent.resolveActivity(packageManager) == null) {
+                val launchIntent = packageManager.getLaunchIntentForPackage(defaultGalleryPackage)
+                if (launchIntent != null) {
+                    try {
+                        startActivity(launchIntent)
+                        return
+                    } catch (e: Exception) {
+                        Log.e("MainActivity", "Error launching default gallery app", e)
+                    }
+                }
+                intent.setPackage(null)
+            }
+        }
+
         try {
             startActivity(intent)
         } catch (e: Exception) {
@@ -1187,6 +1208,7 @@ open class MainActivity : AppCompatActivity() {
         private const val KEY_TAP_TO_TAKE_PHOTO = "tap_to_take_photo"
         private const val KEY_AUTO_ZOOM = "auto_zoom"
         private const val KEY_STORAGE_LOCATION = "storage_location"
+        private const val KEY_DEFAULT_GALLERY = "default_gallery"
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS = mutableListOf(

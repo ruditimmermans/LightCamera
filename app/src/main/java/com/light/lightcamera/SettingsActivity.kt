@@ -1,7 +1,10 @@
 package com.light.lightcamera
 
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.FrameLayout
@@ -11,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
@@ -50,6 +54,8 @@ class SettingsActivity : AppCompatActivity() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
+            setupGalleryPreference()
+
             findPreference<Preference>("button_color")?.setOnPreferenceClickListener {
                 showColorPickerDialog()
                 true
@@ -59,6 +65,74 @@ class SettingsActivity : AppCompatActivity() {
                 checkForUpdates()
                 true
             }
+        }
+
+        private fun setupGalleryPreference() {
+            val galleryPref = findPreference<ListPreference>("default_gallery") ?: return
+            val context = requireContext()
+
+            val entriesList = mutableListOf<String>()
+            val entryValuesList = mutableListOf<String>()
+
+            entriesList.add(getString(R.string.default_gallery_system))
+            entryValuesList.add("default")
+
+            val galleryApps = getInstalledGalleryApps(context)
+            for ((packageName, label) in galleryApps) {
+                entriesList.add(label)
+                entryValuesList.add(packageName)
+            }
+
+            galleryPref.entries = entriesList.toTypedArray()
+            galleryPref.entryValues = entryValuesList.toTypedArray()
+
+            if (galleryPref.value == null || !entryValuesList.contains(galleryPref.value)) {
+                galleryPref.value = "default"
+            }
+        }
+
+        private fun getInstalledGalleryApps(context: Context): List<Pair<String, String>> {
+            val pm = context.packageManager
+            val galleryAppsMap = mutableMapOf<String, String>()
+
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                type = "image/*"
+            }
+
+            val resolveInfos = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                pm.queryIntentActivities(intent, PackageManager.ResolveInfoFlags.of(PackageManager.MATCH_DEFAULT_ONLY.toLong()))
+            } else {
+                @Suppress("DEPRECATION")
+                pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
+            }
+
+            for (resolveInfo in resolveInfos) {
+                val packageName = resolveInfo.activityInfo.packageName
+                if (packageName != context.packageName) {
+                    val label = resolveInfo.loadLabel(pm).toString()
+                    galleryAppsMap[packageName] = label
+                }
+            }
+
+            val galleryCategoryIntent = Intent(Intent.ACTION_MAIN).apply {
+                addCategory(Intent.CATEGORY_APP_GALLERY)
+            }
+            val galleryCategoryInfos = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                pm.queryIntentActivities(galleryCategoryIntent, PackageManager.ResolveInfoFlags.of(PackageManager.MATCH_DEFAULT_ONLY.toLong()))
+            } else {
+                @Suppress("DEPRECATION")
+                pm.queryIntentActivities(galleryCategoryIntent, PackageManager.MATCH_DEFAULT_ONLY)
+            }
+
+            for (resolveInfo in galleryCategoryInfos) {
+                val packageName = resolveInfo.activityInfo.packageName
+                if (packageName != context.packageName) {
+                    val label = resolveInfo.loadLabel(pm).toString()
+                    galleryAppsMap[packageName] = label
+                }
+            }
+
+            return galleryAppsMap.toList().sortedBy { it.second }
         }
 
         private fun checkForUpdates() {

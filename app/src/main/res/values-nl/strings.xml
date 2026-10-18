@@ -159,6 +159,12 @@
         <item>3</item>
         <item>5</item>
     </string-array>
+    <string name="qr_copied_to_clipboard">Gekopieerd naar klembord</string>
+    <string name="qr_clip_label">QR-code</string>
     <string name="fido_clip_label">FIDO-link</string>
     <string name="fido_link_processed">FIDO-link gekopieerd naar klembord</string>
+
+    <string name="default_gallery_title">Standaard galerij-app</string>
+    <string name="default_gallery_summary">Kies welke galerij-app geopend moet worden</string>
+    <string name="default_gallery_system">Systeemstandaard</string>
 </resources>
