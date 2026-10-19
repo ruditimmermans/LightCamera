@@ -696,7 +696,7 @@ open class MainActivity : AppCompatActivity() {
             return
         }
 
-        val name = SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis())
+        val name = FileUtils.getFormattedFilename(this)
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, name)
             put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
@@ -766,7 +766,7 @@ open class MainActivity : AppCompatActivity() {
     }
 
     private fun saveToMediaStoreAndFinish(imageCapture: ImageCapture, targetUri: Uri) {
-        val name = SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis())
+        val name = FileUtils.getFormattedFilename(this)
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, name)
             put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
@@ -951,7 +951,7 @@ open class MainActivity : AppCompatActivity() {
     }
 
     private fun createDefaultMediaStoreVideoOptions(): MediaStoreOutputOptions {
-        val name = SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis())
+        val name = FileUtils.getFormattedFilename(this)
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, name)
             put(MediaStore.MediaColumns.MIME_TYPE, "video/mp4")
@@ -1209,7 +1209,6 @@ open class MainActivity : AppCompatActivity() {
         private const val KEY_AUTO_ZOOM = "auto_zoom"
         private const val KEY_STORAGE_LOCATION = "storage_location"
         private const val KEY_DEFAULT_GALLERY = "default_gallery"
-        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS = mutableListOf(
             Manifest.permission.CAMERA,

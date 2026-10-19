@@ -167,4 +167,33 @@
     <string name="default_gallery_title">Standaard galerij-app</string>
     <string name="default_gallery_summary">Kies welke galerij-app geopend moet worden</string>
     <string name="default_gallery_system">Systeemstandaard</string>
+
+    <string name="filename_format_title">Bestandsnaam datumformaat</string>
+    <string name="filename_format_summary">Kies het datum- en tijdformaat voor het opslaan van bestanden</string>
+
+    <string-array name="date_format_entries">
+        <item>Standaard (yyyy-MM-dd-HH-mm-ss-SSS)</item>
+        <item>IMG_yyyyMMdd_HHmmss (IMG_20260330_143005)</item>
+        <item>yyyyMMdd_HHmmss (20260330_143005)</item>
+        <item>yyyy-MM-dd_HH-mm-ss (2026-03-30_14-30-05)</item>
+        <item>yyyy.MM.dd_HH.mm.ss (2026.03.30_14.30.05)</item>
+        <item>yyyyMMdd_HHmmssSSS (20260330_143005123)</item>
+        <item>MM.dd.yyyy.HH.mm.ss (03.30.2026.14.30.05)</item>
+        <item>dd-MM-yyyy-HH-mm-ss (30-03-2026-14-30-05)</item>
+        <item>dd_MM_yyyy_HH-mm-ss (30_03_2026_14-30-05)</item>
+        <item>dd.MM.yyyy.HH.mm.ss (30.03.2026.14.30.05)</item>
+    </string-array>
+
+    <string-array name="date_format_values">
+        <item>yyyy-MM-dd-HH-mm-ss-SSS</item>
+        <item>\'IMG_\'yyyyMMdd_HHmmss</item>
+        <item>yyyyMMdd_HHmmss</item>
+        <item>yyyy-MM-dd_HH-mm-ss</item>
+        <item>yyyy.MM.dd_HH.mm.ss</item>
+        <item>yyyyMMdd_HHmmssSSS</item>
+        <item>MM.dd.yyyy.HH.mm.ss</item>
+        <item>dd-MM-yyyy-HH-mm-ss</item>
+        <item>dd_MM_yyyy_HH-mm-ss</item>
+        <item>dd.MM.yyyy.HH.mm.ss</item>
+    </string-array>
 </resources>

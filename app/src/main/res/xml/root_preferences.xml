@@ -44,6 +44,16 @@
             app:summary="@string/default_gallery_summary"
             app:useSimpleSummaryProvider="true" />
 
+        <ListPreference
+            app:defaultValue="yyyy-MM-dd-HH-mm-ss-SSS"
+            app:entries="@array/date_format_entries"
+            app:entryValues="@array/date_format_values"
+            app:icon="@drawable/ic_info_outline"
+            app:key="filename_format"
+            app:title="@string/filename_format_title"
+            app:summary="@string/filename_format_summary"
+            app:useSimpleSummaryProvider="true" />
+
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/category_screen_recorder">

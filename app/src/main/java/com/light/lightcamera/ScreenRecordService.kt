@@ -27,7 +27,6 @@ import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
-import java.text.SimpleDateFormat
 import java.util.*
 
 class ScreenRecordService : Service(), ScreenOverlayView.OverlayListener {
@@ -227,7 +226,7 @@ class ScreenRecordService : Service(), ScreenOverlayView.OverlayListener {
         recorder.setVideoEncodingBitRate(bitrate)
 
         // Setup output file in MediaStore
-        val name = "ScreenRecord_" + SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis())
+        val name = FileUtils.getFormattedFilename(this, prefix = "ScreenRecord_")
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, name)
             put(MediaStore.MediaColumns.MIME_TYPE, "video/mp4")
@@ -473,7 +472,6 @@ class ScreenRecordService : Service(), ScreenOverlayView.OverlayListener {
         private const val TAG = "ScreenRecordService"
         private const val CHANNEL_ID = "screen_record_channel"
         private const val NOTIFICATION_ID = 2001
-        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
 
         const val ACTION_START = "com.light.lightcamera.action.START_SCREEN_RECORD"
         const val ACTION_STOP = "com.light.lightcamera.action.STOP_SCREEN_RECORD"
