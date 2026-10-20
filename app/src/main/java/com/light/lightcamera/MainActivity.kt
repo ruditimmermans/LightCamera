@@ -696,7 +696,7 @@ open class MainActivity : AppCompatActivity() {
             return
         }
 
-        val name = FileUtils.getFormattedFilename(this)
+        val name = FileUtils.getFormattedFilename(this, prefix = "IMG_")
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, name)
             put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
@@ -766,7 +766,7 @@ open class MainActivity : AppCompatActivity() {
     }
 
     private fun saveToMediaStoreAndFinish(imageCapture: ImageCapture, targetUri: Uri) {
-        val name = FileUtils.getFormattedFilename(this)
+        val name = FileUtils.getFormattedFilename(this, prefix = "IMG_")
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, name)
             put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
@@ -951,7 +951,7 @@ open class MainActivity : AppCompatActivity() {
     }
 
     private fun createDefaultMediaStoreVideoOptions(): MediaStoreOutputOptions {
-        val name = FileUtils.getFormattedFilename(this)
+        val name = FileUtils.getFormattedFilename(this, prefix = "VID_")
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, name)
             put(MediaStore.MediaColumns.MIME_TYPE, "video/mp4")

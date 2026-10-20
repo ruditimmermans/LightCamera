@@ -11,7 +11,7 @@ object FileUtils {
 
     fun getFormattedFilename(
         context: Context,
-        prefix: String = "",
+        prefix: String = "IMG_",
         defaultFormat: String = DEFAULT_FILENAME_FORMAT,
     ): String {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -25,6 +25,6 @@ object FileUtils {
             sdf.format(timestamp)
         }
         val sanitized = formatted.replace(Regex("[\\\\/:*?\"<>|]"), "_")
-        return if (prefix.isNotEmpty()) "$prefix$sanitized" else sanitized
+        return if (prefix.isNotEmpty() && !sanitized.startsWith(prefix)) "$prefix$sanitized" else sanitized
     }
 }
