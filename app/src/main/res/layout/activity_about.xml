@@ -109,23 +109,6 @@
                         android:orientation="vertical">
 
                         <com.google.android.material.button.MaterialButton
-                            android:id="@+id/donate_button"
-                            style="@style/Widget.Material3.Button.TextButton.Icon"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="start|center_vertical"
-                            android:padding="16dp"
-                            android:text="@string/donate"
-                            android:textColor="?attr/colorOnSurface"
-                            app:icon="@drawable/ic_volunteer_activism"
-                            app:iconTint="?attr/colorPrimary" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="?attr/colorOutlineVariant" />
-
-                        <com.google.android.material.button.MaterialButton
                             android:id="@+id/donate_paypal_button"
                             style="@style/Widget.Material3.Button.TextButton.Icon"
                             android:layout_width="match_parent"
