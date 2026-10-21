@@ -45,7 +45,7 @@
             app:useSimpleSummaryProvider="true" />
 
         <ListPreference
-            app:defaultValue="yyyy-MM-dd-HH-mm-ss-SSS"
+            app:defaultValue="dd/MM/yyyy.HH.mm.ss"
             app:entries="@array/date_format_entries"
             app:entryValues="@array/date_format_values"
             app:icon="@drawable/ic_info_outline"

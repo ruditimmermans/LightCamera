@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 object FileUtils {
-    const val DEFAULT_FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
+    const val DEFAULT_FILENAME_FORMAT = "dd/MM/yyyy.HH.mm.ss"
     const val KEY_FILENAME_FORMAT = "filename_format"
 
     fun getFormattedFilename(
@@ -24,7 +24,7 @@ object FileUtils {
             val sdf = SimpleDateFormat(defaultFormat, Locale.US)
             sdf.format(timestamp)
         }
-        val sanitized = formatted.replace(Regex("[\\\\/:*?\"<>|]"), "_")
+        val sanitized = formatted.replace(Regex("[\\\\/:*?\"<>|]"), "-")
         return if (prefix.isNotEmpty() && !sanitized.startsWith(prefix)) "$prefix$sanitized" else sanitized
     }
 }

@@ -191,26 +191,14 @@
     <string name="filename_format_summary">Choisissez le format de date et d\'heure pour enregistrer les fichiers</string>
 
     <string-array name="date_format_entries">
-        <item>Par défaut (IMG_yyyy-MM-dd-HH-mm-ss-SSS)</item>
-        <item>yyyyMMdd_HHmmss (IMG_20260330_143005)</item>
-        <item>yyyy-MM-dd_HH-mm-ss (IMG_2026-03-30_14-30-05)</item>
-        <item>yyyy.MM.dd_HH.mm.ss (IMG_2026.03.30_14.30.05)</item>
-        <item>yyyyMMdd_HHmmssSSS (IMG_20260330_143005123)</item>
-        <item>MM.dd.yyyy.HH.mm.ss (IMG_03.30.2026.14.30.05)</item>
+        <item>Par défaut (IMG_dd/MM/yyyy.HH.mm.ss)</item>
         <item>dd-MM-yyyy-HH-mm-ss (IMG_30-03-2026-14-30-05)</item>
-        <item>dd_MM_yyyy_HH-mm-ss (IMG_30_03_2026_14-30-05)</item>
         <item>dd.MM.yyyy.HH.mm.ss (IMG_30.03.2026.14.30.05)</item>
     </string-array>
 
     <string-array name="date_format_values">
-        <item>yyyy-MM-dd-HH-mm-ss-SSS</item>
-        <item>yyyyMMdd_HHmmss</item>
-        <item>yyyy-MM-dd_HH-mm-ss</item>
-        <item>yyyy.MM.dd_HH.mm.ss</item>
-        <item>yyyyMMdd_HHmmssSSS</item>
-        <item>MM.dd.yyyy.HH.mm.ss</item>
+        <item>dd/MM/yyyy.HH.mm.ss</item>
         <item>dd-MM-yyyy-HH-mm-ss</item>
-        <item>dd_MM_yyyy_HH-mm-ss</item>
         <item>dd.MM.yyyy.HH.mm.ss</item>
     </string-array>
 </resources>
